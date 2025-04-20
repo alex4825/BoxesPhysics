@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
+    [SerializeField] protected float RotationSpeed = 200;
+
     [SerializeField] private KeyCode _clockwiseKey = KeyCode.W;
     [SerializeField] private KeyCode _anticlockwiseKey = KeyCode.Q;
-    [SerializeField] private float _rotationSpeed = 200;
-    [SerializeField] private float _maxRotationAngle = 90;
 
-    private void Update()
+    protected void Update()
     {
         if (Input.GetKey(_clockwiseKey))
-            Rotate(_rotationSpeed);
-        
+            Rotate(RotationSpeed);
+
         if (Input.GetKey(_anticlockwiseKey))
-            Rotate(-_rotationSpeed);
+            Rotate(-RotationSpeed);
     }
 
-    private void Rotate(float speed)
+    protected virtual void Rotate(float speed)
     {
         transform.Rotate(transform.up, speed * Time.deltaTime, Space.World);
     }
