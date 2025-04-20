@@ -6,6 +6,7 @@ public class Exploder : MonoBehaviour
     [SerializeField] private LayerMask _explodedLayerMask;
     [SerializeField] private float _explosionRadius = 3;
     [SerializeField] private float _explosionForce = 5;
+    [SerializeField] private ParticleSystem _explosionEffectPrefab;
 
     private const int RightMouseButton = 1;
 
@@ -15,6 +16,7 @@ public class Exploder : MonoBehaviour
         {
             Vector3 clickPoint = Raycaster.GetCursorRaycastPoint(_shootedLayerMask);
             ShootIn(clickPoint);
+            PlayEffectIn(clickPoint);
         }
     }
 
@@ -29,6 +31,9 @@ public class Exploder : MonoBehaviour
             colliderRigidbody.AddForce(GetDirection(point, collider.transform.position) * _explosionForce, ForceMode.Impulse);
         }
     }
+
+    private void PlayEffectIn(Vector3 point)
+        => Instantiate(_explosionEffectPrefab, point, Quaternion.identity);
 
     private Vector3 GetDirection(Vector3 fromPoint, Vector3 toPoint)
         => (toPoint - fromPoint).normalized;
