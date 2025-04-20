@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Dragger : MonoBehaviour, IDraggable
+public class Dragger : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private LayerMask _grabbedLayerMask;
@@ -14,7 +14,7 @@ public class Dragger : MonoBehaviour, IDraggable
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(LeftMouseButton) && Raycaster.TryGetGrabbed(_grabbedLayerMask, out Transform grabbedTransform))
+        if (Input.GetMouseButtonDown(LeftMouseButton) && Raycaster.TryGrabFirstOne(_grabbedLayerMask, out Transform grabbedTransform))
             Grab(grabbedTransform);
 
         if (IsDragging)
@@ -30,6 +30,7 @@ public class Dragger : MonoBehaviour, IDraggable
     {
         IsDragging = true;
         _currentTarget = target;
+        _currentTarget.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void Drag()
@@ -44,6 +45,7 @@ public class Dragger : MonoBehaviour, IDraggable
         {
             IsDragging = false;
             _currentTarget = null;
+            _currentTarget.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 }

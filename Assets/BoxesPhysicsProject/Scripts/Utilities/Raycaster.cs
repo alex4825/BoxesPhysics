@@ -9,7 +9,7 @@ public static class Raycaster
         return hit.point;
     }
 
-    public static bool TryGetGrabbed(LayerMask layerMask, out Transform transform)
+    public static bool TryGrabFirstOne(LayerMask layerMask, out Transform transform)
     {
         bool isGrabbed = Physics.Raycast(GetPointerRay(), out RaycastHit hit, Mathf.Infinity, layerMask);
 
