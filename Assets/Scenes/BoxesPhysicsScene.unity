@@ -698,8 +698,9 @@ GameObject:
   m_Component:
   - component: {fileID: 765278607}
   - component: {fileID: 765278606}
+  - component: {fileID: 765278608}
   m_Layer: 0
-  m_Name: Dragger
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -738,6 +739,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765278608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765278605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b935bbd64a382488cca5c6f7081b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootedLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _explodedLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _explosionRadius: 3
+  _explosionForce: 5
+  _explosionEffectPrefab: {fileID: 5444105318733727396, guid: cf82839c411151342a7b2337bda9fb34,
+    type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
