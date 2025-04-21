@@ -44,8 +44,8 @@ public class Dragger : MonoBehaviour
         if (IsDragging)
         {
             IsDragging = false;
-            _currentTarget = null;
             _currentTarget.GetComponent<Rigidbody>().isKinematic = false;
+            _currentTarget = null;
         }
     }
 }
