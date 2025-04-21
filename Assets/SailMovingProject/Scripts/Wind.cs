@@ -3,7 +3,7 @@ using UnityEngine;
 public class Wind : MonoBehaviour
 {
     [SerializeField] private float _minSpeed = 5;
-    [SerializeField] private float _maxSpeed = 10;
+    [SerializeField] private float _maxSpeed = 15;
     [SerializeField] private float _changeDirectionTime = 5;
 
     private float _minRotationAngle = 10;
@@ -13,6 +13,12 @@ public class Wind : MonoBehaviour
     public float Speed { get; private set; }
     public Vector3 Direction { get; private set; }
 
+    private void Start()
+    {
+        Direction = GetRandomDirectionXZ();
+        Speed = GetRandomValue();
+    }
+
     private void Update()
     {
         _timer += Time.deltaTime;
@@ -21,6 +27,7 @@ public class Wind : MonoBehaviour
         {
             _timer = 0;
             Direction = GetRandomDirectionXZ();
+            Speed = GetRandomValue();
         }
     }
 
@@ -33,4 +40,6 @@ public class Wind : MonoBehaviour
 
         return turn * direction;
     }
+
+    private float GetRandomValue() => Random.Range(_minSpeed, _maxSpeed);
 }
