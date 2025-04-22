@@ -7,9 +7,10 @@ public class ShipMover : MonoBehaviour
 
     private void Update()
     {
-        float directionKoefficient = Vector3.Dot(_wind.Direction, _sail.forward);
+        float windSailAlignmentKoefficient = Vector3.Dot(_wind.Direction, _sail.forward);
+        float shipSailAlignmentKoefficient = Vector3.Dot(transform.forward, _sail.forward);
 
-        if (directionKoefficient > 0)
-            transform.Translate(transform.forward * directionKoefficient * _wind.Speed * Time.deltaTime, Space.World);
+        if (windSailAlignmentKoefficient > 0)
+            transform.Translate(transform.forward * shipSailAlignmentKoefficient * windSailAlignmentKoefficient * _wind.Speed * Time.deltaTime, Space.World);
     }
 }
