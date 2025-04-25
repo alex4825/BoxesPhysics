@@ -9,11 +9,11 @@ public static class Raycaster
         return hit.point;
     }
 
-    public static bool TryTakeFirstOne(LayerMask layerMask, out IIteractable grabbleItem)
+    public static bool TryTakeFirstOne(LayerMask layerMask, out IInteractable grabbleItem)
     {
         bool isGrabbed = Physics.Raycast(GetPointerRay(), out RaycastHit hit, Mathf.Infinity, layerMask);
 
-        grabbleItem = hit.collider != null ? hit.collider.GetComponent<IIteractable>() : null;
+        grabbleItem = hit.collider != null ? hit.collider.GetComponent<IInteractable>() : null;
 
         return isGrabbed;
     }

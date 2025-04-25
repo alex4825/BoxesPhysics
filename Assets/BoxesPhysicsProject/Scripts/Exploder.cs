@@ -19,9 +19,10 @@ public class Exploder : IShootHandler
 
         foreach (Collider collider in colliders)
         {
-            Rigidbody colliderRigidbody = collider.GetComponent<Rigidbody>();
-
-            colliderRigidbody.AddForce(GetDirection(point, collider.transform.position) * _explosionForce, ForceMode.Impulse);
+            if (collider.TryGetComponent<IExploding>(out IExploding item))
+            {
+                item.Explode(GetDirection(point, collider.transform.position), _explosionForce);
+            }
         }
 
         PlayEffectIn(point);

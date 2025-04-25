@@ -5,7 +5,7 @@ public class Dragger : IInteractHandler
     private LayerMask _groundMask;
 
     private Vector3 _dragOffset = new(0, 1, 0);
-    private IIteractable _item;
+    private IInteractable _item;
 
     public Dragger(LayerMask groundMask)
     {
@@ -14,7 +14,7 @@ public class Dragger : IInteractHandler
 
     public bool IsTaken => _item != null;
 
-    public void Take(IIteractable item)
+    public void Take(IInteractable item)
     {
         _item = item;
         _item.OnGrab();

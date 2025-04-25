@@ -20,7 +20,7 @@ public class Example : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(LeftMouseButton) && Raycaster.TryTakeFirstOne(_interactableMask, out IIteractable interactableItem))
+        if (Input.GetMouseButtonDown(LeftMouseButton) && Raycaster.TryTakeFirstOne(_interactableMask, out IInteractable interactableItem))
             _dragger.Take(interactableItem);
 
         _dragger.Use();
