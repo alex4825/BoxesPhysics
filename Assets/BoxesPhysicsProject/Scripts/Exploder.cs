@@ -1,28 +1,21 @@
 using UnityEngine;
 
-public class Exploder : MonoBehaviour
+public class Exploder : IShootHandler
 {
-    [SerializeField] private LayerMask _shootedLayerMask;
-    [SerializeField] private LayerMask _explodedLayerMask;
-    [SerializeField] private float _explosionRadius = 3;
-    [SerializeField] private float _explosionForce = 5;
-    [SerializeField] private ParticleSystem _explosionEffectPrefab;
+    private LayerMask _interactableMask;
+    private float _explosionRadius = 3;
+    private float _explosionForce = 5;
+    private ParticleSystem _explosionEffectPrefab;
 
-    private const int RightMouseButton = 1;
-
-    private void Update()
+    public Exploder(LayerMask interactableMask, ParticleSystem explosionEffectPrefab)
     {
-        if (Input.GetMouseButtonDown(RightMouseButton))
-        {
-            Vector3 clickPoint = Raycaster.GetCursorRaycastPoint(_shootedLayerMask);
-            ShootIn(clickPoint);
-            PlayEffectIn(clickPoint);
-        }
+        _interactableMask = interactableMask;
+        _explosionEffectPrefab = explosionEffectPrefab;
     }
 
-    private void ShootIn(Vector3 point)
+    public void ShootIn(Vector3 point)
     {
-        Collider[] colliders = Physics.OverlapSphere(point, _explosionRadius, _explodedLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(point, _explosionRadius, _interactableMask);
 
         foreach (Collider collider in colliders)
         {
@@ -30,10 +23,12 @@ public class Exploder : MonoBehaviour
 
             colliderRigidbody.AddForce(GetDirection(point, collider.transform.position) * _explosionForce, ForceMode.Impulse);
         }
+
+        PlayEffectIn(point);
     }
 
     private void PlayEffectIn(Vector3 point)
-        => Instantiate(_explosionEffectPrefab, point, Quaternion.identity);
+        => Object.Instantiate(_explosionEffectPrefab, point, Quaternion.identity);
 
     private Vector3 GetDirection(Vector3 fromPoint, Vector3 toPoint)
         => (toPoint - fromPoint).normalized;
