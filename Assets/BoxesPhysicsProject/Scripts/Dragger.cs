@@ -1,51 +1,41 @@
 using UnityEngine;
 
-public class Dragger : MonoBehaviour
+public class Dragger : IInteractHandler
 {
-    [SerializeField] private LayerMask _groundLayerMask;
-    [SerializeField] private LayerMask _grabbedLayerMask;
-
-    private const int LeftMouseButton = 0;
+    private LayerMask _groundMask;
 
     private Vector3 _dragOffset = new(0, 1, 0);
-    private Transform _currentTarget;
+    private IIteractable _item;
 
-    public bool IsDragging { get; private set; }
-
-    private void Update()
+    public Dragger(LayerMask groundMask)
     {
-        if (Input.GetMouseButtonDown(LeftMouseButton) && Raycaster.TryGrabFirstOne(_grabbedLayerMask, out Transform grabbedTransform))
-            Grab(grabbedTransform);
+        _groundMask = groundMask;
+    }
 
-        if (IsDragging)
+    public bool IsTaken => _item != null;
+
+    public void Take(IIteractable item)
+    {
+        _item = item;
+        _item.OnGrab();
+    }
+
+    public void Use()
+    {
+        if (IsTaken)
         {
-            Drag();
+            Vector3 raycastPoint = Raycaster.GetCursorRaycastPoint(_groundMask);
+            _item.Transform.position = raycastPoint + _dragOffset;
         }
-
-        if (Input.GetMouseButtonUp(LeftMouseButton))
-            Drop();
-    }
-
-    public void Grab(Transform target)
-    {
-        IsDragging = true;
-        _currentTarget = target;
-        _currentTarget.GetComponent<Rigidbody>().isKinematic = true;
-    }
-
-    public void Drag()
-    {
-        Vector3 raycastPoint = Raycaster.GetCursorRaycastPoint(_groundLayerMask);
-        _currentTarget.position = raycastPoint + _dragOffset;
     }
 
     public void Drop()
     {
-        if (IsDragging)
+        if (IsTaken)
         {
-            IsDragging = false;
-            _currentTarget.GetComponent<Rigidbody>().isKinematic = false;
-            _currentTarget = null;
+            _item.OnRelease();
+            _item = null;
         }
     }
+
 }

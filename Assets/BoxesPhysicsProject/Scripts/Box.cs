@@ -1,12 +1,18 @@
 using UnityEngine;
 
-public class Box : MonoBehaviour
+public class Box : MonoBehaviour, IIteractable
 {
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] private Collider _collider;
 
-    private void Update()
+    public Transform Transform => transform;
+
+    public void OnGrab()
     {
-        
+        GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public void OnRelease()
+    {
+        GetComponent<Rigidbody>().isKinematic = false;
     }
 }
